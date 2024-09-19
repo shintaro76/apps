@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ひらがな蓄積表示ページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 16px;
+            margin: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 72px;
+            margin-top: 50px;
+            min-height: 100px;
+            word-wrap: break-word;
+        }
+		/* 色の定義 */
+		.background-color-1 {
+		    background-color: #8ecae6; /* 1. Soft Blue */
+		}
+
+		.background-color-2 {
+		    background-color: #219ebc; /* 2. Darker Blue */
+		}
+
+		.background-color-3 {
+		    background-color: #023047; /* 3. Dark Blue */
+		}
+
+		.background-color-4 {
+		    background-color: #ffb703; /* 4. Bright Yellow */
+		}
+
+		.background-color-5 {
+		    background-color: #fb8500; /* 5. Orange */
+		}
+
+    </style>
+</head>
+<body>
+<div class="button-container">
+<button class="background-color-5" onclick="clearResult()">間違って押した</button>
+<button onclick="addChar('あとで')">あとで</button>
+<button onclick="addChar('その前に')">その前に</button>
+<button onclick="addChar('違う')">違う</button>
+<button onclick="addChar('ありがとう')">ありがとう</button>
+<button onclick="addChar('トイレに行く')">トイレに行く</button>
+<button onclick="addChar('ベッドに行く')">ベッドに行く</button>
+<button onclick="addChar('行かない')">行かない</button>
+<button onclick="addChar('座りなおしたい')">座りなおしたい</button>
+<button onclick="addChar('少し休憩')">少し休憩</button>
+<button onclick="addChar('疲れた')">疲れた</button>
+<button onclick="addChar('ちょっと寝たい')">ちょっと寝たい</button>
+<button onclick="addChar('食べる')">食べる</button>
+<button onclick="addChar('食べない')">食べない</button>
+<button onclick="addChar('水分を摂りたい')">水分を摂りたい</button>
+<button onclick="addChar('もう飲まない')">飲まない</button>
+<button onclick="addChar('テレビ見たい')">テレビ見たい</button>
+<button onclick="addChar('違う番組を見たい')">違う番組を見たい</button>
+<button onclick="addChar('嬉しい')">嬉しい</button>
+<button onclick="addChar('楽しい')">楽しい</button>
+<button onclick="addChar('面白い')">面白い</button>
+<button onclick="addChar('面白くない')">面白くない</button>
+<button onclick="addChar('懐かしい')">懐かしい</button>
+<button onclick="addChar('さよなら、また来てね')">さよなら、またね</button>
+<button onclick="addChar('おやすみ')">おやすみ</button>
+<button onclick="addChar('頑張ってるね')">頑張ってるね</button>
+<button onclick="addChar('悲しい')">悲しい</button>
+<button onclick="addChar('きつい')">きつい</button>
+<button onclick="addChar('義正')">義正</button>
+<button onclick="addChar('朋子')">朋子</button>
+<button onclick="addChar('信太郎')">信太郎</button>
+<button onclick="addChar('孝太郎')">孝太郎</button>
+<button onclick="addChar('小梅')">小梅</button>
+<button onclick="addChar('千知')">千知</button>
+<button onclick="addChar('日和')">日和</button>
+<button onclick="addChar('尚志')">尚志</button>
+<button onclick="addChar('笑子')">笑子</button>
+<button class="background-color-5" onclick="clearResult()">クリア</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        let displayedChars = '';
+
+        const dakutenMap = {
+            'か': 'が', 'き': 'ぎ', 'く': 'ぐ', 'け': 'げ', 'こ': 'ご',
+            'さ': 'ざ', 'し': 'じ', 'す': 'ず', 'せ': 'ぜ', 'そ': 'ぞ',
+            'た': 'だ', 'ち': 'ぢ', 'つ': 'づ', 'て': 'で', 'と': 'ど',
+            'は': 'ば', 'ひ': 'び', 'ふ': 'ぶ', 'へ': 'べ', 'ほ': 'ぼ'
+        };
+
+        const handakutenMap = {
+            'は': 'ぱ', 'ひ': 'ぴ', 'ふ': 'ぷ', 'へ': 'ぺ', 'ほ': 'ぽ'
+        };
+
+        const smallMap = {
+            'つ': 'っ', 'や': 'ゃ', 'ゆ': 'ゅ', 'よ': 'ょ'
+        };
+
+        function addChar(char) {
+            displayedChars += char;
+            updateDisplay();
+        }
+
+        function addDakuten() {
+            if (displayedChars.length > 0) {
+                const lastChar = displayedChars.slice(-1);
+                if (lastChar in dakutenMap) {
+                    displayedChars = displayedChars.slice(0, -1) + dakutenMap[lastChar];
+                    updateDisplay();
+                }
+            }
+        }
+
+        function addHandakuten() {
+            if (displayedChars.length > 0) {
+                const lastChar = displayedChars.slice(-1);
+                if (lastChar in handakutenMap) {
+                    displayedChars = displayedChars.slice(0, -1) + handakutenMap[lastChar];
+                    updateDisplay();
+                }
+            }
+        }
+
+        function makeSmall() {
+            if (displayedChars.length > 0) {
+                const lastChar = displayedChars.slice(-1);
+                if (lastChar in smallMap) {
+                    displayedChars = displayedChars.slice(0, -1) + smallMap[lastChar];
+                    updateDisplay();
+                }
+            }
+        }
+
+        function deleteChar() {
+            if (displayedChars.length > 0) {
+                displayedChars = displayedChars.slice(0, -1);
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('result').innerText = displayedChars;
+        }
+
+        function clearResult() {
+            displayedChars = '';
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
