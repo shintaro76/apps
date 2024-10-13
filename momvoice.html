@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ひらがな蓄積表示ページ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 16px;
+            margin: 5px;
+            padding: 10px 10px;
+            cursor: pointer;
+        }
+        #result {
+            font-size: 72px;
+            margin-top: 50px;
+            min-height: 100px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+<button onclick="addChar('あ')">あ</button>
+<button onclick="addChar('い')">い</button>
+<button onclick="addChar('う')">う</button>
+<button onclick="addChar('え')">え</button>
+<button onclick="addChar('お')">お</button>
+<button onclick="addChar('か')">か</button>
+<button onclick="addChar('き')">き</button>
+<button onclick="addChar('く')">く</button>
+<button onclick="addChar('け')">け</button>
+<button onclick="addChar('こ')">こ</button>
+<button onclick="addChar('さ')">さ</button>
+<button onclick="addChar('し')">し</button>
+<button onclick="addChar('す')">す</button>
+<button onclick="addChar('せ')">せ</button>
+<button onclick="addChar('そ')">そ</button>
+<button onclick="addChar('た')">た</button>
+<button onclick="addChar('ち')">ち</button>
+<button onclick="addChar('つ')">つ</button>
+<button onclick="addChar('て')">て</button>
+<button onclick="addChar('と')">と</button>
+<button onclick="addChar('な')">な</button>
+<button onclick="addChar('に')">に</button>
+<button onclick="addChar('ぬ')">ぬ</button>
+<button onclick="addChar('ね')">ね</button>
+<button onclick="addChar('の')">の</button>
+<button onclick="addChar('は')">は</button>
+<button onclick="addChar('ひ')">ひ</button>
+<button onclick="addChar('ふ')">ふ</button>
+<button onclick="addChar('へ')">へ</button>
+<button onclick="addChar('ほ')">ほ</button>
+<button onclick="addChar('ま')">ま</button>
+<button onclick="addChar('み')">み</button>
+<button onclick="addChar('む')">む</button>
+<button onclick="addChar('め')">め</button>
+<button onclick="addChar('も')">も</button>
+<button onclick="addChar('や')">や</button>
+<button onclick="addChar('ゆ')">ゆ</button>
+<button onclick="addChar('よ')">よ</button>
+<button onclick="addChar('ら')">ら</button>
+<button onclick="addChar('り')">り</button>
+<button onclick="addChar('る')">る</button>
+<button onclick="addChar('れ')">れ</button>
+<button onclick="addChar('ろ')">ろ</button>
+<button onclick="addChar('わ')">わ</button>
+<button onclick="addChar('を')">を</button>
+<button onclick="addChar('ん')">ん</button>
+<button onclick="addChar('ー')">ー</button>
+        <button onclick="addDakuten()">゛</button>
+        <button onclick="addHandakuten()">゜</button>
+        <button onclick="makeSmall()">小さい</button>
+        <button onclick="deleteChar()">削除</button>
+        <button onclick="clearResult()">クリア</button>
+<a href="test20240919_02.html">単語</a>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        let displayedChars = '';
+
+        const dakutenMap = {
+            'か': 'が', 'き': 'ぎ', 'く': 'ぐ', 'け': 'げ', 'こ': 'ご',
+            'さ': 'ざ', 'し': 'じ', 'す': 'ず', 'せ': 'ぜ', 'そ': 'ぞ',
+            'た': 'だ', 'ち': 'ぢ', 'つ': 'づ', 'て': 'で', 'と': 'ど',
+            'は': 'ば', 'ひ': 'び', 'ふ': 'ぶ', 'へ': 'べ', 'ほ': 'ぼ'
+        };
+
+        const handakutenMap = {
+            'は': 'ぱ', 'ひ': 'ぴ', 'ふ': 'ぷ', 'へ': 'ぺ', 'ほ': 'ぽ'
+        };
+
+        const smallMap = {
+            'つ': 'っ', 'や': 'ゃ', 'ゆ': 'ゅ', 'よ': 'ょ'
+        };
+
+        function addChar(char) {
+            displayedChars += char;
+            updateDisplay();
+        }
+
+        function addDakuten() {
+            if (displayedChars.length > 0) {
+                const lastChar = displayedChars.slice(-1);
+                if (lastChar in dakutenMap) {
+                    displayedChars = displayedChars.slice(0, -1) + dakutenMap[lastChar];
+                    updateDisplay();
+                }
+            }
+        }
+
+        function addHandakuten() {
+            if (displayedChars.length > 0) {
+                const lastChar = displayedChars.slice(-1);
+                if (lastChar in handakutenMap) {
+                    displayedChars = displayedChars.slice(0, -1) + handakutenMap[lastChar];
+                    updateDisplay();
+                }
+            }
+        }
+
+        function makeSmall() {
+            if (displayedChars.length > 0) {
+                const lastChar = displayedChars.slice(-1);
+                if (lastChar in smallMap) {
+                    displayedChars = displayedChars.slice(0, -1) + smallMap[lastChar];
+                    updateDisplay();
+                }
+            }
+        }
+
+        function deleteChar() {
+            if (displayedChars.length > 0) {
+                displayedChars = displayedChars.slice(0, -1);
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('result').innerText = displayedChars;
+        }
+
+        function clearResult() {
+            displayedChars = '';
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
